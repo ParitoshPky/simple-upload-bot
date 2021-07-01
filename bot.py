@@ -30,21 +30,20 @@ async def send_to_transfersh_async(file):
     file_name = os.path.basename(file)
 
     print("\nUploading file: {} (size of the file: {})".format(file_name, size_of_file))
-    
+    """
     url = 'https://api.anonfiles.com/upload/'
  
     with open(file, 'rb') as f:
             async with aiohttp.ClientSession() as session:
                 async with session.post(url, data={str(file): f}) as response:
-                    download_link = await response.text()
-                    
+                    download_link = await response.text()              
     print("Link to download file(will be saved till {}):\n{}".format(final_date, download_link))
     return download_link, final_date, size_of_file
     """
-    callapi = requests.post("https://api.anonfiles.com/upload", file)
+    callapi = requests.post("https://api.anonfiles.com/upload", data={str(file): f})
     text = callapi.json()
     return text, final_date, size_of_file
-    """
+   
 async def send_to_tmp_async(file):
     url = 'https://tmp.ninja/api.php?d=upload-tool'
     
