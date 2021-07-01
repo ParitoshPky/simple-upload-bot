@@ -21,7 +21,7 @@ def get_date_in_two_weeks():
     today = datetime.datetime.today()
     date_in_two_weeks = today + datetime.timedelta(days=14)
     return date_in_two_weeks.date()
-
+"""
 async def send_to_transfersh_async(file):
     
     size = os.path.getsize(file)
@@ -30,7 +30,7 @@ async def send_to_transfersh_async(file):
     file_name = os.path.basename(file)
 
     print("\nUploading file: {} (size of the file: {})".format(file_name, size_of_file))
-    """
+    
     url = 'https://api.anonfiles.com/upload/'
  
     with open(file, 'rb') as f:
@@ -39,12 +39,48 @@ async def send_to_transfersh_async(file):
                     download_link = await response.text()              
     print("Link to download file(will be saved till {}):\n{}".format(final_date, download_link))
     return download_link, final_date, size_of_file
-    """
+    
     with open(file, 'rb') as f:
         callapi = requests.post("https://api.anonfiles.com/upload", data={str(file): f})
         text = callapi.json()
     return text, final_date, size_of_file
-   
+""" 
+
+async def upload_file(ufile):
+    """This function uploads the given
+    file to anonfiles."""
+    
+    with open(ufile, mode='rb') as file_handler:
+        r = requests.post('https://api.anonfiles.com/upload', files={'file': file_handler})
+    
+    return r.json()['data']['file']['url']['full']
+
+"""
+def uploaded_file_info(fileid):
+    This function gives information 
+    about the file on anonefiles.
+    r = requests.get(f'https://api.anonfiles.com/v2/file/{fileid}/info')
+    data = r.json()['data']['file']['metadata']
+    try:
+        fid = data['id']
+    except:
+        fid = None
+    try:
+        fname = data['name']
+    except:
+        fname = None
+    try:
+        fbsize = data['size']['bytes']
+    except:
+        fbsize = None
+    try:
+        frsize = data['size']['readable']
+    except:
+        frsize = None
+    return f'''File ID: {fid}\nFile Name: {fname}\nFile Size (in bytes): {fbsize}\nFile Size (readable): {frsize}'''
+"""
+
+
 async def send_to_tmp_async(file):
     url = 'https://tmp.ninja/api.php?d=upload-tool'
     
@@ -96,10 +132,23 @@ async def up(event):
         await orta.delete()
 
     raise events.StopPropagation
-
+    
+@bot.on(events.NewMessage(pattern='/anonup'))
+async def tsh(event):
+    if event.reply_to_msg_id:
+        start = time.time()
+        url = await event.get_reply_message()
+       
+        orta = await event.respond("Uploading to TransferSh...")
+            data, pfile, purl, full = await upload_file(url)
+            zaman = str(time.time() - start)
+            await orta.edit(f"File Successfully Uploaded to TransferSh.\n\nLink:{full}\nFile:{pfile}")
+    raise events.StopPropagation
+    
+"""
 @bot.on(events.NewMessage(pattern='/transfersh'))
 async def tsh(event):
-    """if event.reply_to_msg_id:
+    if event.reply_to_msg_id:
         start = time.time()
         url = await event.get_reply_message()
         ilk = await event.respond("Downloading...")
@@ -112,7 +161,7 @@ async def tsh(event):
             print(e)
             await event.respond(f"Downloading Failed\n\n**Error:** {e}")
         
-        await ilk.delete()"""
+        await ilk.delete()
     if event.reply_to_msg_id:
         start = time.time()
         url = await event.get_reply_message()
@@ -140,6 +189,7 @@ async def tsh(event):
             await event.respond(f"Uploading Failed\n\n**Error:** {e}")
 
     raise events.StopPropagation
+    """
 
 @bot.on(events.NewMessage(pattern='/speedtest'))
 async def speedtest(event):
