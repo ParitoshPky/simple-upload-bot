@@ -40,8 +40,9 @@ async def send_to_transfersh_async(file):
     print("Link to download file(will be saved till {}):\n{}".format(final_date, download_link))
     return download_link, final_date, size_of_file
     """
-    callapi = requests.post("https://api.anonfiles.com/upload", data={str(file): f})
-    text = callapi.json()
+    with open(file, 'rb') as f:
+        callapi = requests.post("https://api.anonfiles.com/upload", data={str(file): f})
+        text = callapi.json()
     return text, final_date, size_of_file
    
 async def send_to_tmp_async(file):
