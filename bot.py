@@ -97,7 +97,7 @@ async def tsh(event):
         start = time.time()
         url = await event.get_reply_message()
         ilk = await event.respond("Downloading...")
-        {try:
+        try:
             """file_path = await url.download_media(progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                     progress(d, t, ilk, start, "Downloading...")
                 ))"""
