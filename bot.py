@@ -132,7 +132,7 @@ async def up(event):
         await orta.delete()
 
     raise events.StopPropagation
-    
+ """   
 @bot.on(events.NewMessage(pattern='/anonup'))
 async def tsh(event):
     if event.reply_to_msg_id:
@@ -178,17 +178,17 @@ async def tsh(event):
 
         try:
             orta = await event.respond("Uploading to TransferSh...")
-            download_link, final_date, size = await send_to_transfersh_async(file_path)
+            newdata = await upload_file(file_path)
 
             zaman = str(time.time() - start)
-            await orta.edit(f"File Successfully Uploaded to TransferSh.\n\nLink:{download_link}\nExpired Date:{final_date}")
+            await orta.edit(f"File Successfully Uploaded to TransferSh.\n\nLink:{newdata}")
         except Exception as e:
             traceback.print_exc()
             print(e)
             await event.respond(f"Uploading Failed\n\n**Error:** {e}")
 
     raise events.StopPropagation
-    """
+    
 
 @bot.on(events.NewMessage(pattern='/speedtest'))
 async def speedtest(event):
