@@ -93,21 +93,34 @@ async def up(event):
 
 @bot.on(events.NewMessage(pattern='/transfersh'))
 async def tsh(event):
-    if event.reply_to_msg_id:
+    """if event.reply_to_msg_id:
         start = time.time()
         url = await event.get_reply_message()
         ilk = await event.respond("Downloading...")
         try:
-            """file_path = await url.download_media(progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+            file_path = await url.download_media(progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                     progress(d, t, ilk, start, "Downloading...")
-                ))"""
-            file_path= url
+                ))
         except Exception as e:
             traceback.print_exc()
             print(e)
             await event.respond(f"Downloading Failed\n\n**Error:** {e}")
         
+        await ilk.delete()"""
+    if event.reply_to_msg_id:
+        start = time.time()
+        url = await event.get_reply_message()
+        ilk = await event.respond("Downloading...")
+        
+        try:
+            filename = os.path.join(DOWNLOADPATH, os.path.basename(url.text))
+            file_path = await download_file(url.text, filename, ilk, start, bot)
+        except Exception as e:
+            print(e)
+            await event.respond(f"Downloading Failed\n\n**Error:** {e}")
+        
         await ilk.delete()
+
 
         try:
             orta = await event.respond("Uploading to TransferSh...")
