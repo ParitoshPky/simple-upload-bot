@@ -44,7 +44,7 @@ async def send_to_transfersh_async(file):
     
     callapi = requests.post("https://api.anonfiles.com/upload", file)
     text = callapi.json()
-    return text['short'], final_date, size_of_file
+    return text, final_date, size_of_file
 
 async def send_to_tmp_async(file):
     url = 'https://tmp.ninja/api.php?d=upload-tool'
