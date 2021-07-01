@@ -132,7 +132,7 @@ async def up(event):
         await orta.delete()
 
     raise events.StopPropagation
- """   
+"""   
 @bot.on(events.NewMessage(pattern='/anonup'))
 async def tsh(event):
     if event.reply_to_msg_id:
