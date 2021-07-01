@@ -138,11 +138,10 @@ async def tsh(event):
     if event.reply_to_msg_id:
         start = time.time()
         url = await event.get_reply_message()
-       
         orta = await event.respond("Uploading to TransferSh...")
-            data, pfile, purl, full = await upload_file(url)
-            zaman = str(time.time() - start)
-            await orta.edit(f"File Successfully Uploaded to TransferSh.\n\nLink:{full}\nFile:{pfile}")
+        data, pfile, purl, full = await upload_file(url)
+        zaman = str(time.time() - start)
+        await orta.edit(f"File Successfully Uploaded to TransferSh.\n\nLink:{full}\nFile:{pfile}")
     raise events.StopPropagation
     
 """
