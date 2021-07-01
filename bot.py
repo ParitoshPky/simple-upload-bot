@@ -29,7 +29,7 @@ async def send_to_transfersh_async(file):
     file_name = os.path.basename(file)
 
     print("\nUploading file: {} (size of the file: {})".format(file_name, size_of_file))
-    url = 'https://transfer.sh/'
+    url = 'https://api.anonfiles.com/upload/'
     
     with open(file, 'rb') as f:
             async with aiohttp.ClientSession() as session:
