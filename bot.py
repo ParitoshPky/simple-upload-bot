@@ -9,6 +9,7 @@ import aiohttp
 from utils import progress, humanbytes, time_formatter, convert_from_bytes
 import traceback
 import speedtest
+import requests
 
 bot = TelegramClient('upbot', APIID, APIHASH).start(bot_token=BOTTOKEN)
 
