@@ -97,10 +97,11 @@ async def tsh(event):
         start = time.time()
         url = await event.get_reply_message()
         ilk = await event.respond("Downloading...")
-        try:
-            file_path = await url.download_media(progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+        {try:
+            """file_path = await url.download_media(progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
                     progress(d, t, ilk, start, "Downloading...")
-                ))
+                ))"""
+            file_path= url
         except Exception as e:
             traceback.print_exc()
             print(e)
